@@ -23,7 +23,7 @@ This repository contains a proof of concept (PoC) for a full-stack application t
 
 This project is a **Proof of Concept (PoC)** for demonstrating how to dockerize and orchestrate a full-stack application with different components, including:
 
-- **Next.js (Client)**: The frontend application built with React.
+- **Next.js (Client)**: The frontend application built with React. This app was created using the [Next.js starter template for dashboards](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example).
 - **Nest.js (Server)**: The backend REST API that handles authentication and interacts with the database.
 - **Audit Microservice**: A microservice built with Nest.js that listens for login events and logs them into the database using NATS streaming.
 - **PostgreSQL (Database)**: The relational database where user data and audit logs are stored.
