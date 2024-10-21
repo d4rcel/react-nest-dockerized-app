@@ -1,5 +1,7 @@
+const BASE_API_URL = 'http://localhost:3001';
+
 export const loginUser = async ({ email, password }: { email: string; password: string }) => {
-  const res = await fetch('http://localhost:3001/auth/login', {
+  const res = await fetch(`${BASE_API_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -12,19 +14,24 @@ export const loginUser = async ({ email, password }: { email: string; password: 
     throw new Error('Login failed');
   }
 
-  const user = await res.json();
-  return user;
+  return res.json();
 };
 
 export const logoutUser = async () => {
-  await fetch('http://localhost:3001/auth/logout', {
+  const res = await fetch(`${BASE_API_URL}/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   });
+
+  if (!res.ok) {
+    console.error('Failed to logout');
+  }
+
+  return res.json();
 };
 
 export const getCurrentUser = async () => {
-  const res = await fetch('http://localhost:3001/auth/me', {
+  const res = await fetch(`${BASE_API_URL}/auth/me`, {
     method: 'GET',
     credentials: 'include',
   });
