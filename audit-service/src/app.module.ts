@@ -15,7 +15,7 @@ import { AppService } from './app.service';
         name: 'NATS_SERVICE',
         transport: Transport.NATS,
         options: {
-          url: process.env.NATS_URL || 'nats://localhost:4222',
+          servers: [process.env.NATS_URL || 'nats://localhost:4222'],
         },
       },
     ]),

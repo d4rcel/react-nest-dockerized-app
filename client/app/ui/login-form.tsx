@@ -19,7 +19,6 @@ export default function LoginForm() {
     setError('');
     try {
       const success = await loginUser({ email, password });
-      console.log('user---->', success);
       if (success) {
         router.push('/dashboard');
       }

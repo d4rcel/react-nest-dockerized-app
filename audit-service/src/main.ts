@@ -6,12 +6,14 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const natsUrl =
-    configService.get<string>('NATS_URL') || 'nats://localhost:4222';
+  const natsUrl = configService.get<string>(
+    'NATS_URL',
+    'nats://localhost:4222',
+  );
   app.connectMicroservice({
     transport: Transport.NATS,
     options: {
-      url: natsUrl,
+      servers: [natsUrl],
     },
   });
   await app.startAllMicroservices();

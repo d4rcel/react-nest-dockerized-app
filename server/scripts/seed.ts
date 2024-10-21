@@ -5,7 +5,7 @@ import { User } from '../src/modules/users/user.model';
 import { saltRounds } from '../src/core/config/saltRounds.config';
 import { UserRole } from '../src/modules/users/users.interfaces';
 
-config();
+config({ path: '../.env' });
 
 const sequelize = new Sequelize({
   dialect: 'postgres',

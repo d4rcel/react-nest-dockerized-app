@@ -18,7 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         name: 'NATS_CLIENT',
         transport: Transport.NATS,
         options: {
-          url: process.env.NATS_URL || 'nats://localhost:4222',
+          servers: [process.env.NATS_URL || 'nats://localhost:4222'],
         },
       },
     ]),
