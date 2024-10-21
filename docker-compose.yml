@@ -1,18 +1,38 @@
-version: '3'
+version: '3.8'
 services:
   server:
     build: ./server
     container_name: nest-app
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=${DB_PORT}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
-      - POSTGRES_DB=${DB_NAME}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      SALT_ROUNDS: ${SALT_ROUNDS}
+      BACKEND_PORT: ${BACKEND_PORT}
+      BACKEND_URL: ${BACKEND_URL}
+      NATS_URL: ${NATS_URL}
     ports:
-      - '${BACKEND_PORT}:3000'
+      - '3001:3001'
     depends_on:
       - db
+      - nats-server
+
+  audit-service:
+    build: ./audit-service
+    container_name: audit-service
+    environment:
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+      NATS_URL: ${NATS_URL}
+    depends_on:
+      - db
+      - nats-server
 
   client:
     build: ./client
@@ -33,3 +53,12 @@ services:
       - ./db:/docker-entrypoint-initdb.d
     ports:
       - '${DB_PORT}:5432'
+
+  nats-server:
+    image: nats:latest
+    container_name: nats-server
+    ports:
+      - '${NATS_PORT}:4222'
+      - '8222:8222'
+    environment:
+      - NATS_CLUSTER_ID=${NATS_CLUSTER_ID}

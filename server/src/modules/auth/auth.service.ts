@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { ClientProxy } from '@nestjs/microservices';
 import { UsersService } from '../users/users.service';
 import { IUser, IUserOutput } from '../users/users.interfaces';
 import * as bcrypt from 'bcrypt';
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    @Inject('NATS_CLIENT') private readonly client: ClientProxy,
   ) {}
 
   async validateUser(
@@ -30,5 +32,14 @@ export class AuthService {
 
   async register(user: IUser) {
     return this.usersService.createUser(user);
+  }
+
+  sendLoginEvent(user: IUser) {
+    this.client.emit('user.login', {
+      userId: user.id,
+      username: user.name,
+      action: 'login',
+      timestamp: new Date(),
+    });
   }
 }

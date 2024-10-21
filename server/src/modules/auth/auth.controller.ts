@@ -35,6 +35,8 @@ export class AuthController {
       sameSite: 'lax',
     });
 
+    this.authService.sendLoginEvent(user);
+
     return res.status(200).json(user);
   }
 
