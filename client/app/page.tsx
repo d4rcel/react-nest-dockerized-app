@@ -20,6 +20,7 @@ export default function Page() {
               Next.js Learn Course
             </a>
             , brought to you by Vercel.
+            <span className='text-red-500'>Test changes</span>
           </p>
           <Link
             href="/login"
