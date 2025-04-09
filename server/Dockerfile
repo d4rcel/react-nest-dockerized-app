@@ -1,19 +1,16 @@
-FROM node:20-alpine
+FROM node:20
+
 WORKDIR /app
 
-# Install build dependencies required for native modules
-RUN apk add --no-cache python3 make g++
-
 RUN npm install -g pnpm
+
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --force
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN pnpm run build
 
-# Force rebuild of native modules, specifically bcrypt
 RUN pnpm rebuild bcrypt
+RUN pnpm run build
 
 EXPOSE 3001
 CMD ["pnpm", "run", "start:dev"]
-
