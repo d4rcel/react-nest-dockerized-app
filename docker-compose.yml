@@ -44,6 +44,7 @@ services:
     volumes:
     - ./client:/app
     - /app/node_modules  # ignore local node_modules
+    # - pnpm-store:/app/.pnpm-store
 
   db:
     image: postgres:13
@@ -66,3 +67,6 @@ services:
       - '8222:8222'
     environment:
       - NATS_CLUSTER_ID=${NATS_CLUSTER_ID}
+
+# volumes:
+#   pnpm-store:
