@@ -41,6 +41,9 @@ services:
       - '3000:3000'
     environment:
       - BACKEND_URL=${BACKEND_URL}:${BACKEND_PORT}
+    volumes:
+    - ./client:/app
+    - /app/node_modules  # ignore local node_modules
 
   db:
     image: postgres:13
