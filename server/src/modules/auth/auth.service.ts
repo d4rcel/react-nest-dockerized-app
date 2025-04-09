@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { UsersService } from '../users/users.service';
 import { IUser, IUserOutput } from '../users/users.interfaces';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {

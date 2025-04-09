@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { config } from 'dotenv';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { User } from '../src/modules/users/user.model';
 import { saltRounds } from '../src/core/config/saltRounds.config';
 import { UserRole } from '../src/modules/users/users.interfaces';
